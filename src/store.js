@@ -1,32 +1,23 @@
-export const initialStore=()=>{
-  return{
-    message: null,
-    todos: [
-      {
-        id: 1,
-        title: "Make the bed",
-        background: null,
-      },
-      {
-        id: 2,
-        title: "Do my homework",
-        background: null,
-      }
-    ]
-  }
-}
+import { createContext } from "react";
+
+export const initialStore = () => {
+    return {
+        allPokemonsNamesUrls: [],
+    };
+};
 
 export default function storeReducer(store, action = {}) {
-  switch(action.type){
-    case 'add_task':
+    switch (action.type) {
 
-      const { id,  color } = action.payload
+        case "set_allPokemonsNamesUrls":
+            return {
+                ...store, // Copiamos todo el estado actual
+                allPokemonsNamesUrls: action.payload, // Reemplazamos allPokemonsNamesUrls con los nuevos datos
+            };
+        default:
+            throw Error("Unknown action.");
 
-      return {
-        ...store,
-        todos: store.todos.map((todo) => (todo.id === id ? { ...todo, background: color } : todo))
-      };
-    default:
-      throw Error('Unknown action.');
-  }    
+    }
 }
+
+export const Context = createContext(null);

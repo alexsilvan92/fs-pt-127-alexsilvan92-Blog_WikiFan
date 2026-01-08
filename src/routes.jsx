@@ -9,10 +9,10 @@ import { Layout } from "./pages/Layout";
 import { Home } from "./pages/Home";
 import { Single } from "./pages/Single";
 import { Demo } from "./pages/Demo";
-import { TheSimpsonsApi } from "./pages/TheSimpsonsApi";
-import { PokeApi } from "./pages/PokeApi";
-import { BobsBurguerApi } from "./pages/BobsBurguerApi";
-import { TheStarWarsApi } from "./pages/TheStarWarsApi";
+import { TheSimpsonsApi } from "./pages/TheSimpsonsApiPage";
+import { PokeApi } from "./pages/PokeApiPage";
+import { BobsBurguerApi } from "./pages/BobsBurguerApiPage";
+import { TheStarWarsApi } from "./pages/TheStarWarsApiPage";
 
 export const router = createBrowserRouter(
     createRoutesFromElements(

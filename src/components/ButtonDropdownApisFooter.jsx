@@ -6,7 +6,7 @@ import logo_pokeApi from "../assets/img/logo_pokeApi.png";
 import logo_bobsBurguerApi from "../assets/img/logo_bobsBurguerApi.ico";
 import logo_theStarWarsApi from "../assets/img/logo_theStarWarsApi.png";
 
-export const ButtonDropdownApis = () => (
+export const ButtonDropdownApisFooter = () => (
     <div className="dropdown text-center my-4">
         <button
             className="btn btn-info dropdown-toggle"

@@ -1,123 +1,80 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import useGlobalReducer from "../hooks/useGlobalReducer";
 
-import logo_FanWiki from "../assets/img/logo_FanWiki.ico";
-import logo_theSimpsonsApi from "../assets/img/logo_theSimpsonsApi.webp";
-import logo_pokeApi from "../assets/img/logo_pokeApi.png";
-import logo_bobsBurguerApi from "../assets/img/logo_bobsBurguerApi.ico";
-import logo_theStarWarsApi from "../assets/img/logo_theStarWarsApi.png";
+import { ButtonDropdownApisNavbar } from "./ButtonDropdownApisNavbar";
+
+import logo_fanwikiV2 from "../assets/img/logo_fanwikiV2.png";
+import logo_pokedexV3 from "../assets/img/logo_pokedexV3.png";
 
 export const Navbar = () => {
-    return (
-        <nav className="navbar navbar-light bg-light">
-            <div className="container">
-                <Link to="/" className="text-decoration-none">
+    const { store, dispatch } = useGlobalReducer();
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    // ===================================================================
+    // FUNCIÓN: Renderizado Condicional De Headers (según la ruta actual)
+    // ===================================================================
+    const renderHeader = () => {
+        const path = location.pathname;
+
+        // ========================================
+        // PÁGINA: Home (/)
+        // ========================================
+        if (path === "/") {
+            return (
+                <Link to="/" className="text-decoration-none mx-auto mb-2">
                     <div className="d-flex align-items-center gap-2">
                         <img
-                            src={logo_FanWiki}
+                            src={logo_fanwikiV2}
                             alt="Logo Fan Wiki"
-                            style={{
-                                height: "90px",
-                                width: "auto",
-                            }}
+                            className="logo-navbar"
                         />
-                        <h1 className="nnavbar-brand d-flex align-items-center mb-0 fs-2 fw-bold text-dark">
-                            <span className="fw-bold">
-                                <span className="text-danger">Fan</span>{" "}
-                                <span className="text-primary">Wiki</span>
-                            </span>
-                        </h1>
                     </div>
                 </Link>
-                <div className="ml-auto">
-                    <div className="dropdown">
-                        <a
-                            className="btn btn-lg btn-success dropdown-toggle"
-                            href="#"
-                            role="button"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                        >
-                            Selecciona una WIKI (API)
-                        </a>
+            );
+        }
 
-                        <ul className="dropdown-menu">
-                            <li>
-                                <Link
-                                    to="/thesimpsonsapi"
-                                    className="dropdown-item d-flex align-items-center justify-content-center text-decoration-none"
-                                >
-                                    <img
-                                        src={logo_theSimpsonsApi}
-                                        alt="The Simpsons API"
-                                        style={{
-                                            height: "40px",
-                                            width: "auto",
-                                        }}
-                                    />
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    to="/pokeapi"
-                                    className="dropdown-item d-flex align-items-center justify-content-center text-decoration-none"
-                                >
-                                    <img
-                                        src={logo_pokeApi}
-                                        alt="Poke API"
-                                        style={{
-                                            height: "40px",
-                                            width: "auto",
-                                        }}
-                                    />
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    to="/bobsburguerapi"
-                                    className="dropdown-item d-flex align-items-center justify-content-center text-decoration-none"
-                                >
-                                    <img
-                                        src={logo_bobsBurguerApi}
-                                        alt="Bob's Burguer Api"
-                                        style={{
-                                            height: "40px",
-                                            width: "auto",
-                                        }}
-                                    />{" "}
-                                    Bob's Burguer Api
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    to="/thestarwarsapi"
-                                    className="dropdown-item d-flex align-items-center justify-content-center text-decoration-none"
-                                >
-                                    <img
-                                        src={logo_theStarWarsApi}
-                                        alt="The Star Wars Api"
-                                        style={{
-                                            height: "40px",
-                                            width: "auto",
-                                        }}
-                                    />{" "}
-                                    Api
-                                </Link>
-                            </li>
-                            <li>
-                                <hr className="dropdown-divider" />
-                            </li>
-                            <li>
-                                {" "}
-                                <Link
-                                    to="/demo"
-                                    className="dropdown-item d-flex align-items-center justify-content-center text-decoration-none"
-                                >
-                                    About
-                                </Link>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+        // ========================================
+        // PÁGINA: Pokedex (/pokeapi)
+        // ========================================
+        if (path === "/pokeapi") {
+            return (
+                <Link to="/pokeapi" className="text-decoration-none mx-auto mb-2">
+                    <img
+                        src={logo_pokedexV3}
+                        alt="Logo Fan Wiki"
+                        className="logo-navbar"
+                    />
+                </Link>
+            );
+        }
+
+        // ========================================
+        // PÁGINA: Detalle de Contacto (/single-contact/:theId)
+        // ========================================
+        if (path.startsWith("/single-contact/")) {
+            // ============================================
+            // BUSCAR EL CONTACTO en el store por ID
+            // ============================================
+            // Buscamos en el array de contacts el que tenga el id que viene en la URL
+            const singleContact = store.contacts.find(
+                (contact) => contact.id === parseInt(theId)
+            );
+
+            return <span className="text-dark"> {singleContact?.name} </span>;
+        }
+
+        // ========================================
+        // OTRAS PÁGINAS (Demo, etc.)
+        // ========================================
+        return <span className="text-dark">{path} Sin Construir</span>;
+    };
+
+    return (
+        <nav className="navbar navbar-light bg-light">
+            <div className="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-between">
+                {renderHeader()}
+                <ButtonDropdownApisNavbar />
             </div>
         </nav>
     );
