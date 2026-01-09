@@ -37,9 +37,9 @@ export const Navbar = () => {
         // ========================================
         // PÁGINA: Pokedex (/pokeapi)
         // ========================================
-        if (path === "/pokeapi") {
+        if (path === "/pokeapi/pokemon") {
             return (
-                <Link to="/pokeapi" className="text-decoration-none mx-auto mb-2">
+                <Link to="/pokeapi/pokemon" className="text-decoration-none mx-auto mb-2">
                     <img
                         src={logo_pokedexV3}
                         alt="Logo Fan Wiki"
@@ -47,21 +47,6 @@ export const Navbar = () => {
                     />
                 </Link>
             );
-        }
-
-        // ========================================
-        // PÁGINA: Detalle de Contacto (/single-contact/:theId)
-        // ========================================
-        if (path.startsWith("/single-contact/")) {
-            // ============================================
-            // BUSCAR EL CONTACTO en el store por ID
-            // ============================================
-            // Buscamos en el array de contacts el que tenga el id que viene en la URL
-            const singleContact = store.contacts.find(
-                (contact) => contact.id === parseInt(theId)
-            );
-
-            return <span className="text-dark"> {singleContact?.name} </span>;
         }
 
         // ========================================

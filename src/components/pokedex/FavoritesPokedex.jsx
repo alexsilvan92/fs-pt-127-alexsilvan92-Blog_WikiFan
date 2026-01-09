@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 
 export const FavoritesPokedex = () => (
-    <div className="col-12 col-md-4 mt-4 mt-md-0">
-        <div className="dropdown p-2 p-md-4 rounded">
+    <div className="col-12 col-md-4 mb-2 mb-lg-0">
+        <div className="dropdown rounded">
             <button
-                className="btn btn-outline-danger dropdown-toggle w-100"
+                className="btn btn-outline-danger dropdown-toggle w-100 fw-semibold"
                 type="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
@@ -13,7 +13,7 @@ export const FavoritesPokedex = () => (
                 <span className="badge bg-danger ms-2">001</span>
             </button>
 
-            <ul className="dropdown-menu category-dropdown">
+            <ul className="dropdown-menu category-dropdown col-12">
                 <li className="dropdown-item text-muted text-center">
                     No tienes favoritos aún
                 </li>

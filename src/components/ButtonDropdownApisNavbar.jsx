@@ -9,19 +9,16 @@ import logo_FanWiki from "../assets/img/logo_FanWiki.ico";
 import { Link } from "react-router-dom";
 
 export const ButtonDropdownApisNavbar = () => (
-    <div className="ml-auto">
-        <div className="dropdown">
-            <a
-                className="btn btn-success dropdown-toggle btn-lg"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
+    <div className="col-12 col-md-4 mb-2 mb-lg-0">
+        <div className="dropdown rounded">
+            <button
+                className="btn btn-outline-success dropdown-toggle w-100 fw-semibold"
+                type="button" data-bs-toggle="dropdown" aria-expanded="false"
             >
                 Selecciona una WIKI
-            </a>
+            </button>
 
-            <ul className="dropdown-menu">
+            <ul className="dropdown-menu col-12">
                 <li>
                     <Link
                         to="/thesimpsonsapi"
@@ -39,7 +36,7 @@ export const ButtonDropdownApisNavbar = () => (
                 </li>
                 <li>
                     <Link
-                        to="/pokeapi"
+                        to="/pokeapi/pokemon"
                         className="dropdown-item d-flex align-items-center justify-content-center text-decoration-none"
                     >
                         <img
@@ -104,7 +101,7 @@ export const ButtonDropdownApisNavbar = () => (
                                 width: "auto",
                             }}
                         />
-                        <h1 className="nnavbar-brand d-flex align-items-center mb-0 fs-2 fw-bold text-dark">
+                        <h1 className="navbar-brand d-flex align-items-center mb-0 fs-2 fw-bold text-dark">
                             <span className="fw-bold">
                                 <span className="text-danger">Fan</span>{" "}
                                 <span className="text-primary">Wiki</span>
