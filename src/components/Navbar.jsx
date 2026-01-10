@@ -37,7 +37,7 @@ export const Navbar = () => {
         // ========================================
         // PÁGINA: Pokedex (/pokeapi)
         // ========================================
-        if (path === "/pokeapi/pokemon") {
+        if (path.startsWith("/pokeapi/")) {
             return (
                 <Link to="/pokeapi/pokemon" className="text-decoration-none mx-auto mb-2">
                     <img

@@ -37,7 +37,7 @@ export const Pokedex = () => {
 
   return (
     <div>
-      <div className="bg-tertiary container-fluid py-4">
+      <div className="navbar-light bg-light container-fluid pb-2 mb-2">
         <div className="row align-items-start">
           {/* SELECTOR */}
           <SelectorPokedex />

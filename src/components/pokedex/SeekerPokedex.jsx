@@ -4,7 +4,7 @@ export const SeekerPokedex = () => (
       <div className="input-group shadow-sm rounded">
         <input
           type="text"
-          className="form-control btn btn-outline-dark"
+          className="form-control btn border-dark"
           placeholder="Nombre o Nº (ej. Pikachu o 025)"
           autoComplete="off"
         />
