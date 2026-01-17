@@ -30,9 +30,8 @@ export default function storeReducer(store, action = {}) {
       };
 
     case 'add_favorite':
-      // Evita duplicados
       if (store.favorites.find((f) => f.name === action.payload.name))
-        return store;
+        return store; // Evita duplicados
       return { ...store, favorites: [...store.favorites, action.payload] };
 
     case 'remove_favorite':

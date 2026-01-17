@@ -1,24 +1,48 @@
-// Import necessary hooks and functions from React.
-import { useContext, useReducer, createContext } from "react";
-import storeReducer, { initialStore } from "../store"  // Import the reducer and the initial state.
+// hooks/useGlobalReducer.jsx
+import { useContext, useReducer, createContext, useEffect } from "react";
+import storeReducer, { initialStore } from "../store"; // Reducer y estado inicial
 
-// Create a context to hold the global state of the application
-// We will call this global state the "store" to avoid confusion while using local states
-const StoreContext = createContext()
+// ======================================
+// CONTEXTO GLOBAL
+// ======================================
+const StoreContext = createContext();
 
-// Define a provider component that encapsulates the store and warps it in a context provider to 
-// broadcast the information throught all the app pages and components.
+// ======================================
+// PROVEEDOR DEL STORE
+// ======================================
 export function StoreProvider({ children }) {
-    // Initialize reducer with the initial state.
-    const [store, dispatch] = useReducer(storeReducer, initialStore())
-    // Provide the store and dispatch method to all child components.
-    return <StoreContext.Provider value={{ store, dispatch }}>
-        {children}
+  // ======== Cargar favoritos de localStorage ========
+  let storedFavorites = [];
+  const storedRaw = localStorage.getItem("wikiStore");
+  try {
+    const parsed = JSON.parse(storedRaw);
+    storedFavorites = Array.isArray(parsed) ? parsed : [];
+  } catch {
+    storedFavorites = [];
+  }
+
+  // Inicializar el reducer con favoritos desde localStorage
+  const [store, dispatch] = useReducer(storeReducer, {
+    ...initialStore(),
+    favorites: storedFavorites, // Solo persistimos favoritos
+  });
+
+  // ======== Guardar favoritos automáticamente en localStorage ========
+  useEffect(() => {
+    localStorage.setItem("wikiStore", JSON.stringify(store.favorites));
+  }, [store.favorites]);
+
+  return (
+    <StoreContext.Provider value={{ store, dispatch }}>
+      {children}
     </StoreContext.Provider>
+  );
 }
 
-// Custom hook to access the global state and dispatch function.
+// ======================================
+// HOOK PERSONALIZADO PARA ACCEDER AL STORE
+// ======================================
 export default function useGlobalReducer() {
-    const { dispatch, store } = useContext(StoreContext)
-    return { dispatch, store };
+  const { store, dispatch } = useContext(StoreContext);
+  return { store, dispatch };
 }

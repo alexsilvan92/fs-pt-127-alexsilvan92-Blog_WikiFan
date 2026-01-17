@@ -6,11 +6,11 @@ import img_not_found from '../../assets/img/img_not_found.png';
 
 export const CardMainPokedex = ({ item, type }) => {
   const { store, dispatch } = useGlobalReducer();
+  const isFavorite = store.favorites.some((f) => f.name === item.name);
   const handleAddFavorite = () =>
     dispatch({ type: 'add_favorite', payload: { ...item, type } });
   const handleRemoveFavorite = () =>
     dispatch({ type: 'remove_favorite', payload: { ...item, type } });
-  const isFavorite = store.favorites.some((f) => f.name === item.name);
 
   const imageSrc =
     item.sprites?.other?.['official-artwork']?.front_default ||
