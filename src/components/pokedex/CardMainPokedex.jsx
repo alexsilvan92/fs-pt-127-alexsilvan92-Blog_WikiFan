@@ -1,29 +1,42 @@
 import { Link } from 'react-router-dom';
+import useGlobalReducer from '../../hooks/useGlobalReducer';
 
-import img_not_found from "../../assets/img/img_not_found.png"
 
-export const CardMainPokedex = ({ item , type}) => {
+import img_not_found from '../../assets/img/img_not_found.png';
+
+export const CardMainPokedex = ({ item, type }) => {
+  const { store, dispatch } = useGlobalReducer();
+  const handleAddFavorite = () =>
+    dispatch({ type: 'add_favorite', payload: { ...item, type } });
+  const handleRemoveFavorite = () =>
+    dispatch({ type: 'remove_favorite', payload: { ...item, type } });
+  const isFavorite = store.favorites.some((f) => f.name === item.name);
+
   const imageSrc =
     item.sprites?.other?.['official-artwork']?.front_default ||
     item.sprites?.front_default ||
     item.sprites?.default ||
-    img_not_found ;
+    img_not_found;
 
   return (
     <li className=" col-6 col-sm-4 col-md-3 col-lg-2">
       <div className="card custom-card position-relative shadow-sm overflow-hidden">
-        <button
-          className="position-absolute top-0 end-0 m-0 btn btn-transparency btn-sm rounded-circle"
-          onClick={() => console.log('Has agregado a favoritos: ', item.name)}
-        >
-          🤍
-        </button>
-        <button
-          className="position-absolute top-0 end-0 m-0 btn btn-transparency btn-sm rounded-circle"
-          onClick={() => console.log('Has eliminado de favoritos: ', item.name)}
-        >
-          ❤️
-        </button>
+        {!isFavorite && (
+          <button
+            className="position-absolute top-0 end-0 m-1 btn btn-transparency btn-sm rounded-circle"
+            onClick={handleAddFavorite}
+          >
+            🤍
+          </button>
+        )}
+        {isFavorite && (
+          <button
+            className="position-absolute top-0 end-0 m-1 btn btn-transparency btn-sm rounded-circle"
+            onClick={handleRemoveFavorite}
+          >
+            ❤️
+          </button>
+        )}
 
         <Link
           to={`/pokeapi/${type}/${item.name}`}
