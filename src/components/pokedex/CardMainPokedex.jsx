@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 import img_not_found from "../../assets/img/img_not_found.png"
 
-export const CardMainPokedex = ({ item }) => {
+export const CardMainPokedex = ({ item , type}) => {
   const imageSrc =
     item.sprites?.other?.['official-artwork']?.front_default ||
     item.sprites?.front_default ||
@@ -26,7 +26,7 @@ export const CardMainPokedex = ({ item }) => {
         </button>
 
         <Link
-          to={`/pokeapi/pokemon/${item.name}`}
+          to={`/pokeapi/${type}/${item.name}`}
           className="text-decoration-none text-black"
         >
           <img

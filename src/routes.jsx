@@ -20,15 +20,22 @@ export const router = createBrowserRouter(
 
       <Route path="/thesimpsonsapi" element={<TheSimpsonsApi />} />
 
-      <Route path="/pokeapi/pokemon" element={<PokeApi />} />
-      <Route path="/pokeapi/pokeball" element={<PokeApi />} />
-      <Route path="/pokeapi/pokegame" element={<PokeApi />} />
+      <Route path="/pokeapi">
+        <Route path="pokemon" element={<PokeApi />} />
+        <Route path="pokemon/:name" element={<PokeApi />} />
+
+        <Route path="pokeball" element={<PokeApi />} />
+        <Route path="pokeball/:name" element={<PokeApi />} />
+
+        <Route path="pokegame" element={<PokeApi />} />
+        <Route path="pokegame/:name" element={<PokeApi />} />
+      </Route>
 
       <Route path="/bobsburguerapi" element={<BobsBurguerApi />} />
 
       <Route path="/thestarwarsapi" element={<TheStarWarsApi />} />
 
       <Route path="/demo" element={<Demo />} />
-    </Route>
-  )
+    </Route>,
+  ),
 );

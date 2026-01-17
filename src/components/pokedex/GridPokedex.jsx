@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { CardMainPokedex } from './CardMainPokedex';
 
-export const GridPokedex = ({ view }) => {
+export const GridPokedex = ({ view , type }) => {
   const [visibleCount, setVisibleCount] = useState(24);
 
   const handleLoadMore = () => {
@@ -12,7 +12,7 @@ export const GridPokedex = ({ view }) => {
     <section className="pokedex-results container-fluid overflow-visible">
       <ul className="results row list-unstyled g-4">
         {view.slice(0, visibleCount).map((item) => (
-          <CardMainPokedex key={item.id} item={item} />
+          <CardMainPokedex key={item.id} item={item} type={type}/>
         ))}
       </ul>
 
