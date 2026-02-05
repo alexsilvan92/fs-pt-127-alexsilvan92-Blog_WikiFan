@@ -22,6 +22,9 @@ export const getItemImage = (item) => {
 
   if (item.api === 'bobsburgersapi')
     imgSrc = item.image;
+  
+  if (item.api === 'starwarsapi')
+    imgSrc = item.image_path || img_not_found;;
 
   return imgSrc;
 };

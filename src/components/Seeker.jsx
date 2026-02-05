@@ -22,6 +22,9 @@ export const Seeker = () => {
       ...store.allBobsBurgersCharacters,
       ...store.allBobsBurgersEndCreditsSequences,
       ...store.allBobsBurgersStores,
+      ...store.allStarWarsPeople,
+      ...store.allStarWarsPlanets,
+      ...store.allStarWarsVehicles,
     ];
 
     return allItems

@@ -30,11 +30,18 @@ export const Selector = () => {
     },
   ];
 
+  const starwarsItems = [
+    { to: '/starwarsapi/people', label: '👩‍👩‍👦‍👦 Personajes' },
+    { to: '/starwarsapi/planets', label: '🪐 Planetas' },
+    { to: '/starwarsapi/vehicles', label: '🚀 Vehículos' },
+  ];
+
   const homeItems = [{ to: '/', label: '🏡 Home' }];
 
   const isPokeApiRoute = pathname.startsWith('/pokeapi');
   const isSimpsonsApiRoute = pathname.startsWith('/thesimpsonsapi');
   const isBobsBurgersApiRoute = pathname.startsWith('/bobsburgersapi');
+  const isStarWarsApiRoute = pathname.startsWith('/starwarsapi');
 
   const items = isPokeApiRoute
     ? pokeApiItems
@@ -42,7 +49,9 @@ export const Selector = () => {
       ? simpsonsItems
       : isBobsBurgersApiRoute
         ? bobsBurgersItems
-        : homeItems;
+        : isStarWarsApiRoute
+          ? starwarsItems
+          : homeItems;
 
   return (
     <div className="col-12 col-md-4 mb-2 mb-lg-0">

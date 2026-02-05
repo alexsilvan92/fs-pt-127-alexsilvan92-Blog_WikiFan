@@ -70,7 +70,7 @@ export const ButtonDropdownApisNavbar = () => (
                 </li>
                 <li>
                     <Link
-                        to="/thestarwarsapi"
+                        to="/starwarsapi"
                         className="dropdown-item d-flex align-items-center justify-content-center text-decoration-none"
                     >
                         <img

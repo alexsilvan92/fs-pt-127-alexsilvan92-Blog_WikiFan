@@ -5,6 +5,8 @@ import useGlobalReducer from '../hooks/useGlobalReducer';
 import { getItemImage } from '../utils/getItemImage';
 import { NotFoundItem } from './NotFoundItem';
 
+import img_not_found from '../assets/img/img_not_found.png';
+
 export const CardGrid = ({ items, baseRoute }) => {
   const { pathname } = useLocation();
   const [visibleCount, setVisibleCount] = useState(24);
@@ -61,6 +63,9 @@ export const CardGrid = ({ items, baseRoute }) => {
                     src={imgSrc}
                     className="card-img-top img-fluid grid-img"
                     alt={item.name}
+                    onError={(e) => {
+                      e.target.src = img_not_found;
+                    }}
                   />
                   <div className="card-body text-center p-2">
                     <h5 className="card-title mb-2 text-capitalize">

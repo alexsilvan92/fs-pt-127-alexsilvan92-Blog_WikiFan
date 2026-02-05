@@ -11,6 +11,9 @@ export const initialStore = () => {
     allBobsBurgersCharacters: [],
     allBobsBurgersEndCreditsSequences: [],
     allBobsBurgersStores: [],
+    allStarWarsPeople: [],
+    allStarWarsPlanets: [],
+    allStarWarsVehicles: [],
     favorites: [],
   };
 };
@@ -29,10 +32,7 @@ export default function storeReducer(store, action = {}) {
 
     // --- POKEAPI ---
     case 'set_allPokemons':
-      return {
-        ...store, // Copiamos todo el estado actual
-        allPokemons: action.payload, // Reemplazamos allPokemons con los nuevos datos
-      };
+      return { ...store, allPokemons: action.payload };
 
     case 'set_allPokeBalls':
       return { ...store, allPokeBalls: action.payload };
@@ -49,6 +49,16 @@ export default function storeReducer(store, action = {}) {
 
     case 'set_allBobsBurgersStores':
       return { ...store, allBobsBurgersStores: action.payload };
+
+      // --- STARWARSPAPI ---
+    case 'set_allStarWarsPeople':
+      return { ...store, allStarWarsPeople: action.payload };
+
+    case 'set_allStarWarsPlanets':
+      return { ...store, allStarWarsPlanets: action.payload };
+
+    case 'set_allStarWarsVehicles':
+      return { ...store, allStarWarsVehicles: action.payload };
 
     // --- FAVORITOS ---
     case 'add_favorite':

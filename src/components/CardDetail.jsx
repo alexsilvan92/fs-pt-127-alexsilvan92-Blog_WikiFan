@@ -4,6 +4,8 @@ import useGlobalReducer from '../hooks/useGlobalReducer';
 import { NotFoundItem } from './NotFoundItem';
 import { getItemImage } from '../utils/getItemImage';
 
+import img_not_found from '../assets/img/img_not_found.png'
+
 export const CardDetail = ({ item }) => {
   if (!item) return <NotFoundItem />;
 
@@ -52,6 +54,9 @@ export const CardDetail = ({ item }) => {
               src={imgSrc}
               className="card-img-top img-fluid"
               alt={item.name}
+              onError={(e) => {
+                e.target.src = img_not_found;
+              }}
             />
             <h2 className="card-title">{item.name}</h2>
           </div>
@@ -81,7 +86,8 @@ export const CardDetail = ({ item }) => {
                       'wikiUrl',
                       'url',
                       'episodeUrl',
-                      'episodeUrl',
+                      'created',
+                      'edited',
                     ].includes(key)
                   )
                     return null;

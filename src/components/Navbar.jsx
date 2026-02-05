@@ -6,10 +6,11 @@ import { Seeker } from '../components/Seeker.jsx';
 import { Selector } from "../components/Selector.jsx";
 import { ButtonDropdownApisNavbar } from './ButtonDropdownApisNavbar';
 
-import logo_pokedexV3 from '../assets/img/logo_pokedexV3.png';
-import logo_thesimpsonsapi from '../assets/img/logo_theSimpsonsApi.webp';
 import logo_fanwikiV2 from '../assets/img/logo_fanwikiV2.png';
-import logo_bobsBurgerApi from '../assets/img/logo_bobsBurgerApi.ico'
+import logo_thesimpsonsapi from '../assets/img/logo_theSimpsonsApi.webp';
+import logo_pokeapi from '../assets/img/logo_pokeApi.png';
+import logo_bobsBurgerApi from '../assets/img/logo_bobsBurgerApi.ico';
+import logo_thestarwarsapi from '../assets/img/logo_theStarWarsApi.png'
 
 export const Navbar = () => {
   const { store, dispatch } = useGlobalReducer();
@@ -67,7 +68,7 @@ export const Navbar = () => {
           className="text-decoration-none mx-auto mb-2"
         >
           <img
-            src={logo_pokedexV3}
+            src={logo_pokeapi}
             alt="Logo Fan Wiki"
             className="logo-navbar"
           />
@@ -90,6 +91,25 @@ export const Navbar = () => {
             className="logo-navbar"
           />
           <h4 className='fw-bold'>Bob's Burgers API</h4>
+        </Link>
+      );
+    }
+
+    // ========================================
+    // PÁGINA: StarWarsApi (/starwarsapi)
+    // ========================================
+    if (path.startsWith('/starwarsapi')) {
+      return (
+        <Link
+          to="/starwarsapi"
+          className="d-flex align-items-center gap-2 text-decoration-none text-black mx-auto mb-2"
+        >
+          <img
+            src={logo_thestarwarsapi}
+            alt="Logo Fan Wiki"
+            className="logo-navbar"
+          />
+          <h4 className='fw-bold'>API</h4>
         </Link>
       );
     }
