@@ -10,11 +10,16 @@ export const CardDetail = ({ item }) => {
   console.log('🚀 CardDetail Cargado');
 
   const navigate = useNavigate();
+
   const { store, dispatch } = useGlobalReducer();
 
-  const isFavorite = store.favorites.some((f) => f.name === item.name);
+  const isFavorite = store.favorites.some(
+    (f) => f.api === item.api && f.type === item.type && f.id === item.id,
+  );
+
   const handleAddFavorite = () =>
     dispatch({ type: 'add_favorite', payload: item });
+
   const handleRemoveFavorite = () =>
     dispatch({ type: 'remove_favorite', payload: item });
 
@@ -69,6 +74,14 @@ export const CardDetail = ({ item }) => {
                       'api',
                       'stats',
                       'sprites',
+                      'image',
+                      'allOccupations',
+                      'nicknames',
+                      'relatives',
+                      'wikiUrl',
+                      'url',
+                      'episodeUrl',
+                      'episodeUrl',
                     ].includes(key)
                   )
                     return null;

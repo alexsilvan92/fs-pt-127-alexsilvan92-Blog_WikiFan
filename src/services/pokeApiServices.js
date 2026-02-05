@@ -2,12 +2,14 @@
 // SERVICIOS DE POKEAPI
 // ====================
 
+const BASE_URL = 'https://pokeapi.co/api';
+
 // ============================================================
 // FUNCIÓN GET - Obtener todos los POKEMONS (name y url)
 // ============================================================
 async function getAllPokemonsNamesUrls() {
   const response = await fetch(
-    `https://pokeapi.co/api/v2/pokemon/?limit=2000&offset=0`,
+    `${BASE_URL}/v2/pokemon/?limit=2000&offset=0`,
   );
   const data = await response.json();
 
@@ -24,7 +26,7 @@ async function getAllPokemonsNamesUrls() {
 // ============================================================
 async function getBallsByCategory(categoryId) {
   const response = await fetch(
-    `https://pokeapi.co/api/v2/item-category/${categoryId}/?limit=2000&offset=0`,
+    `${BASE_URL}/v2/item-category/${categoryId}/?limit=2000&offset=0`,
   );
   const data = await response.json();
   return data.items.map((b) => ({
@@ -50,7 +52,7 @@ async function getAllPokeBallsNamesUrls() {
 // ============================================================
 async function getAllPokeGamesNamesUrls() {
   const response = await fetch(
-    `https://pokeapi.co/api/v2/version/?offset=0&limit=2000`,
+    `${BASE_URL}/v2/version/?offset=0&limit=2000`,
   );
   const data = await response.json();
 
@@ -107,7 +109,7 @@ async function getAllPokeApiDetails(list) {
 // FUNCIÓN GET - Detalle de POKÉMON
 // ============================================================
 async function getPokemonById(id) {
-  const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+  const res = await fetch(`${BASE_URL}/v2/pokemon/${id}`);
   if (!res.ok) throw new Error('Pokemon not found');
 
   const data = await res.json();
@@ -137,7 +139,7 @@ async function getPokemonById(id) {
 // FUNCIÓN GET - Detalle de POKÉBALL
 // ============================================================
 async function getPokeBallById(id) {
-  const res = await fetch(`https://pokeapi.co/api/v2/item/${id}`);
+  const res = await fetch(`${BASE_URL}/v2/item/${id}`);
   if (!res.ok) throw new Error('Pokeball not found');
 
   const data = await res.json();
@@ -162,7 +164,7 @@ async function getPokeBallById(id) {
 // FUNCIÓN GET - Detalle de JUEGO
 // ============================================================
 async function getGameById(id) {
-  const res = await fetch(`https://pokeapi.co/api/v2/version/${id}`);
+  const res = await fetch(`${BASE_URL}/v2/version/${id}`);
   if (!res.ok) throw new Error('Game not found');
 
   const data = await res.json();

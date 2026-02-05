@@ -8,14 +8,16 @@ export const initialStore = () => {
     allPokemons: [],
     allPokeBalls: [],
     allPokeGames: [],
+    allBobsBurgersCharacters: [],
+    allBobsBurgersEndCreditsSequences: [],
+    allBobsBurgersStores: [],
     favorites: [],
   };
 };
 
 export default function storeReducer(store, action = {}) {
   switch (action.type) {
-    
-    // --- SIMPSONSPEDIA ---
+    // --- SIMPSONSAPI ---
     case 'set_allSimpsonsCharacters':
       return { ...store, allSimpsonsCharacters: action.payload };
 
@@ -25,7 +27,7 @@ export default function storeReducer(store, action = {}) {
     case 'set_allSimpsonsLocations':
       return { ...store, allSimpsonsLocations: action.payload };
 
-    // --- POKEDEX ---
+    // --- POKEAPI ---
     case 'set_allPokemons':
       return {
         ...store, // Copiamos todo el estado actual
@@ -37,6 +39,16 @@ export default function storeReducer(store, action = {}) {
 
     case 'set_allPokeGames':
       return { ...store, allPokeGames: action.payload };
+
+    // --- BOBSBURGERSAPI ---
+    case 'set_allBobsBurgersCharacters':
+      return { ...store, allBobsBurgersCharacters: action.payload };
+
+    case 'set_allBobsBurgersEndCreditsSequences':
+      return { ...store, allBobsBurgersEndCreditsSequences: action.payload };
+
+    case 'set_allBobsBurgersStores':
+      return { ...store, allBobsBurgersStores: action.payload };
 
     // --- FAVORITOS ---
     case 'add_favorite':

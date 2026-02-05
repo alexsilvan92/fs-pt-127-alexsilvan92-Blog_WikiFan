@@ -16,7 +16,9 @@ import { SimpsonsCardDetailPage } from './pages/simpsonsPages/CardDetailPage';
 import { PokeApiPage } from './pages/pokemonPages/PokeApiPage';
 import { PokeApiCardGridPage } from './pages/pokemonPages/CardGridPage';
 import { PokeApiCardDetailPage } from './pages/pokemonPages/CardDetailPage';
-import { BobsBurguerApi } from './pages/BobsBurguerApiPage';
+import { BobsBurgersApiPage } from './pages/bobsburgersPages/BobsBurgersApiPage';
+import { BobsBurgersCardGridPage } from './pages/bobsburgersPages/CardGridPage';
+import { BobsBurgersCardDetailPage } from './pages/bobsburgersPages/CardDetailPage';
 import { TheStarWarsApi } from './pages/TheStarWarsApiPage';
 
 export const router = createBrowserRouter(
@@ -36,7 +38,11 @@ export const router = createBrowserRouter(
         <Route path=":type/:id" element={<PokeApiCardDetailPage />} />
       </Route>
 
-      <Route path="/bobsburguerapi" element={<BobsBurguerApi />} />
+      <Route path="/bobsburgersapi">
+        <Route index element={<BobsBurgersApiPage />} />
+        <Route path=":type" element={<BobsBurgersCardGridPage />} />
+        <Route path=":type/:id" element={<BobsBurgersCardDetailPage />} />
+      </Route>
 
       <Route path="/thestarwarsapi" element={<TheStarWarsApi />} />
 

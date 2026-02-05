@@ -8,7 +8,6 @@ export const getItemImage = (item) => {
     imgSrc = `https://cdn.thesimpsonsapi.com/500${path}`;
   }
 
-  // POKEAPI
   if (item.api === 'pokeapi') {
     if (item.type === 'pokemon') {
       imgSrc = item.sprites?.front_default || img_not_found;
@@ -20,6 +19,9 @@ export const getItemImage = (item) => {
       imgSrc = img_not_found;
     }
   }
+
+  if (item.api === 'bobsburgersapi')
+    imgSrc = item.image;
 
   return imgSrc;
 };

@@ -2,13 +2,15 @@
 // SERVICIOS DE SIMPSONPEDIA
 // ====================
 
+const BASE_URL = 'https://thesimpsonsapi.com/api';
+
 // ============================================================
 // FUNCIÓN GET - Obtener todos los PERSONAJES de la API
 // ============================================================
 async function getAllCharacters() {
   // 1️⃣ Obtenemos la primera página para saber el total de páginas
   const firstPageResponse = await fetch(
-    `https://thesimpsonsapi.com/api/characters`,
+    `${BASE_URL}/characters`,
   );
   const firstPageData = await firstPageResponse.json();
 
@@ -24,7 +26,7 @@ async function getAllCharacters() {
   // 2️⃣ Creamos URLs de las demás páginas (desde la 2 hasta totalPages)
   const urls = [];
   for (let i = 2; i <= totalPages; i++) {
-    urls.push(`https://thesimpsonsapi.com/api/characters?page=${i}`);
+    urls.push(`${BASE_URL}/characters?page=${i}`);
   }
 
   // 3️⃣ Hacemos fetch de todas las páginas en paralelo
@@ -54,7 +56,7 @@ async function getAllCharacters() {
 // ============================================================
 async function getAllEpisodes() {
   const firstPageResponse = await fetch(
-    `https://thesimpsonsapi.com/api/episodes`,
+    `${BASE_URL}/episodes`,
   );
   const firstPageData = await firstPageResponse.json();
 
@@ -69,7 +71,7 @@ async function getAllEpisodes() {
 
   const urls = [];
   for (let i = 2; i <= totalPages; i++) {
-    urls.push(`https://thesimpsonsapi.com/api/episodes?page=${i}`);
+    urls.push(`${BASE_URL}/episodes?page=${i}`);
   }
 
   const pagesData = await Promise.all(
@@ -98,7 +100,7 @@ async function getAllEpisodes() {
 // ============================================================
 async function getAllLocations() {
   const firstPageResponse = await fetch(
-    `https://thesimpsonsapi.com/api/locations`,
+    `${BASE_URL}/locations`,
   );
   const firstPageData = await firstPageResponse.json();
 
@@ -113,7 +115,7 @@ async function getAllLocations() {
 
   const urls = [];
   for (let i = 2; i <= totalPages; i++) {
-    urls.push(`https://thesimpsonsapi.com/api/locations?page=${i}`);
+    urls.push(`${BASE_URL}/locations?page=${i}`);
   }
 
   const pagesData = await Promise.all(
@@ -139,7 +141,7 @@ async function getAllLocations() {
 // FUNCIÓN GET - Detalle de PERSONAJE
 // ============================================================
 async function getCharacterById(id) {
-  const res = await fetch(`https://thesimpsonsapi.com/api/characters/${id}`);
+  const res = await fetch(`${BASE_URL}/characters/${id}`);
   if (!res.ok) throw new Error('Character not found');
   const data = await res.json();
   // ⚠️ IMPORTANTE: Añadir el campo 'api' para que getItemImage funcione
@@ -150,7 +152,7 @@ async function getCharacterById(id) {
 // FUNCIÓN GET - Detalle de EPISODIO
 // ============================================================
 async function getEpisodeById(id) {
-  const res = await fetch(`https://thesimpsonsapi.com/api/episodes/${id}`);
+  const res = await fetch(`${BASE_URL}/episodes/${id}`);
   if (!res.ok) throw new Error('Episode not found');
   const data = await res.json();
   // ⚠️ IMPORTANTE: Añadir el campo 'api' para que getItemImage funcione
@@ -161,7 +163,7 @@ async function getEpisodeById(id) {
 // FUNCIÓN GET - Detalle de LOCALIZACIÓN
 // ============================================================
 async function getLocationById(id) {
-  const res = await fetch(`https://thesimpsonsapi.com/api/locations/${id}`);
+  const res = await fetch(`${BASE_URL}/locations/${id}`);
   if (!res.ok) throw new Error('Location not found');
   const data = await res.json();
   // ⚠️ IMPORTANTE: Añadir el campo 'api' para que getItemImage funcione

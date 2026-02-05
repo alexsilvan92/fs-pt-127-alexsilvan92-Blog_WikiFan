@@ -6,9 +6,10 @@ import { Seeker } from '../components/Seeker.jsx';
 import { Selector } from "../components/Selector.jsx";
 import { ButtonDropdownApisNavbar } from './ButtonDropdownApisNavbar';
 
-import logo_fanwikiV2 from '../assets/img/logo_fanwikiV2.png';
 import logo_pokedexV3 from '../assets/img/logo_pokedexV3.png';
 import logo_thesimpsonsapi from '../assets/img/logo_theSimpsonsApi.webp';
+import logo_fanwikiV2 from '../assets/img/logo_fanwikiV2.png';
+import logo_bobsBurgerApi from '../assets/img/logo_bobsBurgerApi.ico'
 
 export const Navbar = () => {
   const { store, dispatch } = useGlobalReducer();
@@ -39,6 +40,24 @@ export const Navbar = () => {
     }
 
     // ========================================
+    // PÁGINA: SimpsonPedia (/thesimpsonsapi)
+    // ========================================
+    if (path.startsWith('/thesimpsonsapi')) {
+      return (
+        <Link
+          to="/thesimpsonsapi"
+          className="text-decoration-none mx-auto mb-2"
+        >
+          <img
+            src={logo_thesimpsonsapi}
+            alt="Logo Fan Wiki"
+            className="logo-navbar"
+          />
+        </Link>
+      );
+    }
+
+    // ========================================
     // PÁGINA: Pokedex (/pokeapi)
     // ========================================
     if (path.startsWith('/pokeapi')) {
@@ -57,19 +76,20 @@ export const Navbar = () => {
     }
 
     // ========================================
-    // PÁGINA: SimpsonPedia (/thesimpsonsapi)
+    // PÁGINA: BobsBurgersApi (/bobsburgersapi)
     // ========================================
-    if (path.startsWith('/thesimpsonsapi')) {
+    if (path.startsWith('/bobsburgersapi')) {
       return (
         <Link
-          to="/thesimpsonsapi"
-          className="text-decoration-none mx-auto mb-2"
+          to="/bobsburgersapi"
+          className="d-flex align-items-center gap-2 text-decoration-none text-black mx-auto mb-2"
         >
           <img
-            src={logo_thesimpsonsapi}
+            src={logo_bobsBurgerApi}
             alt="Logo Fan Wiki"
             className="logo-navbar"
           />
+          <h4 className='fw-bold'>Bob's Burgers API</h4>
         </Link>
       );
     }

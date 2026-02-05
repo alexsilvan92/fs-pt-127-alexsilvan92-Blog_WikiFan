@@ -23,7 +23,10 @@ export const CardGrid = ({ items, baseRoute }) => {
       <ul className="row list-unstyled g-4">
         {visibleItems.map((item) => {
           const imgSrc = getItemImage(item);
-          const isFavorite = store.favorites.some((f) => f.name === item.name);
+          const isFavorite = store.favorites.some(
+            (f) =>
+              f.api === item.api && f.type === item.type && f.id === item.id,
+          );
           const handleAddFavorite = () =>
             dispatch({ type: 'add_favorite', payload: item });
           const handleRemoveFavorite = () =>

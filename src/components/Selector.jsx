@@ -4,29 +4,45 @@ export const Selector = () => {
   const { pathname } = useLocation();
 
   const pokeApiItems = [
-    { to: '/pokeapi/pokemon', label: '🐾 Pokémon' },
-    { to: '/pokeapi/pokeball', label: '⚾ Poké Balls' },
-    { to: '/pokeapi/game', label: '🎮 Juegos' }
+    { to: '/pokeapi/pokemon', label: '🐉 Pokémon' },
+    { to: '/pokeapi/pokeball', label: '🔴 Poké Balls' },
+    { to: '/pokeapi/game', label: '🎮 Juegos' },
   ];
 
   const simpsonsItems = [
     { to: '/thesimpsonsapi/characters', label: '👤 Personajes' },
     { to: '/thesimpsonsapi/episodes', label: '📺 Episodios' },
-    { to: '/thesimpsonsapi/locations', label: '📍 Ubicaciones' }
+    { to: '/thesimpsonsapi/locations', label: '📍 Ubicaciones' },
   ];
 
-  const homeItems = [
-    { to: '/', label: '🏡 Home' }
+  const bobsBurgersItems = [
+    {
+      to: '/bobsburgersapi/characters',
+      label: '👨‍👩‍👧‍👦 Personajes',
+    },
+    {
+      to: '/bobsburgersapi/endCreditsSequences',
+      label: '📺 Créditos finales',
+    },
+    {
+      to: '/bobsburgersapi/storesNextDoor',
+      label: '🏪 Tiendas de al lado',
+    },
   ];
+
+  const homeItems = [{ to: '/', label: '🏡 Home' }];
 
   const isPokeApiRoute = pathname.startsWith('/pokeapi');
   const isSimpsonsApiRoute = pathname.startsWith('/thesimpsonsapi');
+  const isBobsBurgersApiRoute = pathname.startsWith('/bobsburgersapi');
 
   const items = isPokeApiRoute
     ? pokeApiItems
     : isSimpsonsApiRoute
-    ? simpsonsItems
-    : homeItems;
+      ? simpsonsItems
+      : isBobsBurgersApiRoute
+        ? bobsBurgersItems
+        : homeItems;
 
   return (
     <div className="col-12 col-md-4 mb-2 mb-lg-0">
@@ -37,9 +53,7 @@ export const Selector = () => {
           data-bs-toggle="dropdown"
         >
           📦 Categoría
-          <span className="badge bg-primary ms-2">
-            {items.length}
-          </span>
+          <span className="badge bg-primary ms-2">{items.length}</span>
         </button>
 
         <ul className="dropdown-menu category-dropdown col-12">
@@ -55,4 +69,3 @@ export const Selector = () => {
     </div>
   );
 };
-

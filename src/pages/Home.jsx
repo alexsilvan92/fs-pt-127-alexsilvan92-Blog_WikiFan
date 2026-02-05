@@ -3,7 +3,7 @@ import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import logo_FanWiki from "../assets/img/logo_FanWiki.ico";
 import logo_theSimpsonsApi from "../assets/img/logo_theSimpsonsApi.webp";
 import logo_pokeApi from "../assets/img/logo_pokeApi.png";
-import logo_bobsBurguerApi from "../assets/img/logo_bobsBurguerApi.ico";
+import logo_bobsBurgerApi from "../assets/img/logo_bobsBurgerApi.ico";
 import logo_theStarWarsApi from "../assets/img/logo_theStarWarsApi.png";
 
 export const Home = () => {
@@ -147,7 +147,7 @@ export const Home = () => {
                         href="https://www.bobsburgersapi.com/"
                     >
                         <img
-                            src={logo_bobsBurguerApi}
+                            src={logo_bobsBurgerApi}
                             alt="Bob's Burgers API"
                             style={{ height: "40px", verticalAlign: "bottom" }}
                         />

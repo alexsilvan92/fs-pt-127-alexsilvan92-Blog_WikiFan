@@ -19,6 +19,9 @@ export const Seeker = () => {
       ...store.allSimpsonsCharacters,
       ...store.allSimpsonsEpisodes,
       ...store.allSimpsonsLocations,
+      ...store.allBobsBurgersCharacters,
+      ...store.allBobsBurgersEndCreditsSequences,
+      ...store.allBobsBurgersStores,
     ];
 
     return allItems
