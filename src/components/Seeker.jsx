@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useGlobalReducer from '../../hooks/useGlobalReducer';
+import useGlobalReducer from '../hooks/useGlobalReducer';
 
-export const SeekerPokedex = () => {
+export const Seeker = () => {
   const { store } = useGlobalReducer();
   const navigate = useNavigate();
 
@@ -13,14 +13,17 @@ export const SeekerPokedex = () => {
   const getFilteredItems = (value) => {
     if (!value) return [];
     const allItems = [
-      ...store.allPokemonsDetails,
-      ...store.allPokeBallsDetails,
-      ...store.allPokeGamesDetails,
+      ...store.allPokemons,
+      ...store.allPokeBalls,
+      ...store.allPokeGames,
+      ...store.allSimpsonsCharacters,
+      ...store.allSimpsonsEpisodes,
+      ...store.allSimpsonsLocations,
     ];
 
-    return allItems.filter((item) =>
-      item.name.toLowerCase().includes(value.toLowerCase())
-    ).slice(0, 20); // máximo 20 sugerencias
+    return allItems
+      .filter((item) => item.name.toLowerCase().includes(value.toLowerCase()))
+      .slice(0, 20); // máximo 20 sugerencias
   };
 
   const handleInputChange = (e) => {
@@ -31,15 +34,14 @@ export const SeekerPokedex = () => {
 
   // ===== Navegar al detalle del item =====
   const handleSelect = (item) => {
-    const type = store.allPokemonsDetails.includes(item)
-      ? 'pokemon'
-      : store.allPokeBallsDetails.includes(item)
-        ? 'pokeball'
-        : 'game';
+    if (!item?.id || !item?.type || !item?.api) {
+      console.warn('Item seleccionado incompleto:', item);
+      return;
+    }
 
     setQuery('');
     setSuggestions([]);
-    navigate(`/pokeapi/${type}/${item.name}`);
+    navigate(`/${item.api}/${item.type}/${item.id}`);
   };
 
   // ===== Botón de búsqueda / Enter =====
@@ -103,7 +105,7 @@ export const SeekerPokedex = () => {
           >
             {suggestions.map((item) => (
               <li
-                key={item.name}
+                key={`${item.type}-${item.id}`}
                 className="list-group-item list-group-item-action text-capitalize"
                 style={{ cursor: 'pointer' }}
                 onClick={() => handleSelect(item)}

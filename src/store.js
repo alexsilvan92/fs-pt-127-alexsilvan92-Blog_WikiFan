@@ -2,33 +2,43 @@ import { createContext } from 'react';
 
 export const initialStore = () => {
   return {
-    allPokemonsDetails: [],
-    allPokeBallsDetails: [],
-    allPokeGamesDetails: [],
+    allSimpsonsCharacters: [],
+    allSimpsonsEpisodes: [],
+    allSimpsonsLocations: [],
+    allPokemons: [],
+    allPokeBalls: [],
+    allPokeGames: [],
     favorites: [],
   };
 };
 
 export default function storeReducer(store, action = {}) {
   switch (action.type) {
-    case 'set_allPokemonsDetails':
+    
+    // --- SIMPSONSPEDIA ---
+    case 'set_allSimpsonsCharacters':
+      return { ...store, allSimpsonsCharacters: action.payload };
+
+    case 'set_allSimpsonsEpisodes':
+      return { ...store, allSimpsonsEpisodes: action.payload };
+
+    case 'set_allSimpsonsLocations':
+      return { ...store, allSimpsonsLocations: action.payload };
+
+    // --- POKEDEX ---
+    case 'set_allPokemons':
       return {
         ...store, // Copiamos todo el estado actual
-        allPokemonsDetails: action.payload, // Reemplazamos allPokemonsDetails con los nuevos datos
+        allPokemons: action.payload, // Reemplazamos allPokemons con los nuevos datos
       };
 
-    case 'set_allPokeBallsDetails':
-      return {
-        ...store,
-        allPokeBallsDetails: action.payload,
-      };
+    case 'set_allPokeBalls':
+      return { ...store, allPokeBalls: action.payload };
 
-    case 'set_allPokeGamesDetails':
-      return {
-        ...store,
-        allPokeGamesDetails: action.payload,
-      };
+    case 'set_allPokeGames':
+      return { ...store, allPokeGames: action.payload };
 
+    // --- FAVORITOS ---
     case 'add_favorite':
       if (store.favorites.find((f) => f.name === action.payload.name))
         return store; // Evita duplicados

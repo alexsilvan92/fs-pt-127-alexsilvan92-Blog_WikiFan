@@ -1,6 +1,6 @@
 // hooks/useGlobalReducer.jsx
-import { useContext, useReducer, createContext, useEffect } from "react";
-import storeReducer, { initialStore } from "../store"; // Reducer y estado inicial
+import { useContext, useReducer, createContext, useEffect } from 'react';
+import storeReducer, { initialStore } from '../store'; // Reducer y estado inicial
 
 // ======================================
 // CONTEXTO GLOBAL
@@ -13,9 +13,8 @@ const StoreContext = createContext();
 export function StoreProvider({ children }) {
   // ======== Cargar favoritos de localStorage ========
   let storedFavorites = [];
-  const storedRaw = localStorage.getItem("wikiStore");
   try {
-    const parsed = JSON.parse(storedRaw);
+    const parsed = JSON.parse(localStorage.getItem('wikiStore'));
     storedFavorites = Array.isArray(parsed) ? parsed : [];
   } catch {
     storedFavorites = [];
@@ -29,7 +28,11 @@ export function StoreProvider({ children }) {
 
   // ======== Guardar favoritos automáticamente en localStorage ========
   useEffect(() => {
-    localStorage.setItem("wikiStore", JSON.stringify(store.favorites));
+    try {
+      localStorage.setItem('wikiStore', JSON.stringify(store.favorites));
+    } catch (e) {
+      console.error('Error guardando favoritos en localStorage', e);
+    }
   }, [store.favorites]);
 
   return (

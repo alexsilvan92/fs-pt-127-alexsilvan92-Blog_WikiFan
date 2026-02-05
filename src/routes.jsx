@@ -5,11 +5,17 @@ import {
   createRoutesFromElements,
   Route,
 } from 'react-router-dom';
+import useGlobalReducer from './hooks/useGlobalReducer';
+
 import { Layout } from './pages/Layout';
 import { Home } from './pages/Home';
 import { Demo } from './pages/Demo';
-import { TheSimpsonsApi } from './pages/TheSimpsonsApiPage';
-import { PokeApi } from './pages/PokeApiPage';
+import { TheSimpsonsApiPage } from './pages/simpsonsPages/TheSimpsonsApiPage';
+import { SimpsonsCardGridPage } from './pages/simpsonsPages/CardGridPage';
+import { SimpsonsCardDetailPage } from './pages/simpsonsPages/CardDetailPage';
+import { PokeApiPage } from './pages/pokemonPages/PokeApiPage';
+import { PokeApiCardGridPage } from './pages/pokemonPages/CardGridPage';
+import { PokeApiCardDetailPage } from './pages/pokemonPages/CardDetailPage';
 import { BobsBurguerApi } from './pages/BobsBurguerApiPage';
 import { TheStarWarsApi } from './pages/TheStarWarsApiPage';
 
@@ -18,17 +24,16 @@ export const router = createBrowserRouter(
     <Route path="/" element={<Layout />} errorElement={<h1>Not found!</h1>}>
       <Route path="/" element={<Home />} />
 
-      <Route path="/thesimpsonsapi" element={<TheSimpsonsApi />} />
+      <Route path="/thesimpsonsapi">
+        <Route index element={<TheSimpsonsApiPage />} />
+        <Route path=":type" element={<SimpsonsCardGridPage />} />
+        <Route path=":type/:id" element={<SimpsonsCardDetailPage />} />
+      </Route>
 
       <Route path="/pokeapi">
-        <Route path="pokemon" element={<PokeApi />} />
-        <Route path="pokemon/:name" element={<PokeApi />} />
-
-        <Route path="pokeball" element={<PokeApi />} />
-        <Route path="pokeball/:name" element={<PokeApi />} />
-
-        <Route path="pokegame" element={<PokeApi />} />
-        <Route path="pokegame/:name" element={<PokeApi />} />
+        <Route index element={<PokeApiPage />} />
+        <Route path=":type" element={<PokeApiCardGridPage />} />
+        <Route path=":type/:id" element={<PokeApiCardDetailPage />} />
       </Route>
 
       <Route path="/bobsburguerapi" element={<BobsBurguerApi />} />
