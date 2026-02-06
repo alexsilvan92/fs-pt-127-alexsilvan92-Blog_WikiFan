@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import starWarsApiServices from '../../services/starWarsApiServices';
 import { CardDetail } from '../../components/CardDetail';
+import { Loading } from '../../components/Loading';
 import { NotFoundItem } from '../../components/NotFoundItem';
 
 export const StarWarsCardDetailPage = () => {
