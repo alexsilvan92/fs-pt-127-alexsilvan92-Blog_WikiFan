@@ -2,8 +2,8 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import simpsonsApiServices from '../../services/theSimpsonsApiServices';
 import { CardDetail } from '../../components/CardDetail';
+import { Loading } from '../../components/Loading';
 import { NotFoundItem } from '../../components/NotFoundItem';
-import useGlobalReducer from '../../hooks/useGlobalReducer';
 
 export const SimpsonsCardDetailPage = () => {
   const { type, id } = useParams();
@@ -42,7 +42,7 @@ export const SimpsonsCardDetailPage = () => {
     fetchDetail();
   }, [type, id]);
 
-  if (loading) return <div className="text-center mt-5">Cargando...</div>;
+  if (loading) return <Loading message="Cargando..." />;
   if (error || !item) return <NotFoundItem />;
 
   return <CardDetail item={item} />;

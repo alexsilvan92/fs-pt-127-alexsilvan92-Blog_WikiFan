@@ -3,45 +3,42 @@ import { useEffect, useState } from 'react';
 
 import simpsonsApiServices from '../../services/theSimpsonsApiServices.js';
 import { SimpsonPedia } from '../../components/SimpsonPedia.jsx';
+import { Loading } from '../../components/Loading';
+import { NotFoundItem } from '../../components/NotFoundItem';
 
 export const TheSimpsonsApiPage = () => {
   const { store, dispatch } = useGlobalReducer();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchSimpsons = async () => {
-      const characters = await simpsonsApiServices.getAllCharacters();
-      const episodes = await simpsonsApiServices.getAllEpisodes();
-      const locations = await simpsonsApiServices.getAllLocations();
+      try {
+        setLoading(true);
+        setError(null);
 
-      dispatch({ type: 'set_allSimpsonsCharacters', payload: characters });
-      dispatch({ type: 'set_allSimpsonsEpisodes', payload: episodes });
-      dispatch({ type: 'set_allSimpsonsLocations', payload: locations });
+        const [characters, episodes, locations] = await Promise.all([
+          simpsonsApiServices.getAllCharacters(),
+          simpsonsApiServices.getAllEpisodes(),
+          simpsonsApiServices.getAllLocations(),
+        ]);
+
+        dispatch({ type: 'set_allSimpsonsCharacters', payload: characters });
+        dispatch({ type: 'set_allSimpsonsEpisodes', payload: episodes });
+        dispatch({ type: 'set_allSimpsonsLocations', payload: locations });
+      } catch (err) {
+        console.error('❌ Error cargando datos de The Simpsons Api:', err);
+        setError(err.message || 'Error al cargar los datos');
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchSimpsons();
   }, []);
 
-  // ======================================
-  // useEffect PARA DEBUGGER DE LA STORE
-  // ======================================
-  useEffect(() => {
-    console.log('💾🌍 Store actualizado:', store);
-  }, [store]);
-
-  // ======================================
-  // useEffect PARA DEBUGGER DE LOCALSTORAGE
-  // ======================================
-  useEffect(() => {
-    const raw = localStorage.getItem('wikiStore');
-    let parsed = null;
-    try {
-      parsed = JSON.parse(raw);
-    } catch {
-      parsed = raw;
-    }
-
-    console.log('💾🧠 localStorage wikiStore:', parsed);
-  }, [store.favorites]);
-
+  if (loading) return <Loading message="Cargando datos de The Simpsons Api" />;
+  if (error) return <NotFoundItem />;
+  
   return <SimpsonPedia />;
 };

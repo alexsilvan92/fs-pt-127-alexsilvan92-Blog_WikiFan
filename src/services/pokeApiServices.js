@@ -1,43 +1,54 @@
-// ====================
-// SERVICIOS DE POKEAPI
-// ====================
+// ============================================
+// SERVICIOS DE pokeApi
+// ============================================
 
-const BASE_URL = 'https://pokeapi.co/api';
+const BASE_URL = 'https://pokeapi.co/api/v2';
 
 // ============================================================
-// FUNCIÓN GET - Obtener todos los POKEMONS (name y url)
+// FUNCIÓN GET - Obtener todos los POKÉMON
 // ============================================================
-async function getAllPokemonsNamesUrls() {
-  const response = await fetch(
-    `${BASE_URL}/v2/pokemon/?limit=2000&offset=0`,
-  );
+async function getAllPokemons() {
+  const response = await fetch(`${BASE_URL}/pokemon?limit=2000&offset=0`);
   const data = await response.json();
 
-  return data.results.map((p) => ({
-    name: p.name,
-    url: p.url,
-    type: 'pokemon',
-    api: 'pokeapi',
-  }));
+  const pokemons = data.results.map((p) => {
+    const id = p.url.split('/').filter(Boolean).pop();
+    
+    return {
+      id,
+      name: p.name,
+      url: p.url,
+      type: 'pokemon',
+      api: 'pokeapi',
+      image_path: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`,
+    };
+  });
+
+  return pokemons;
 }
 
 // ============================================================
-// FUNCIÓN GET - Obtener todas las POKEBALLS (standard, special, apricorn)
+// FUNCIÓN GET - Obtener todas las POKÉBALLS
 // ============================================================
 async function getBallsByCategory(categoryId) {
-  const response = await fetch(
-    `${BASE_URL}/v2/item-category/${categoryId}/?limit=2000&offset=0`,
-  );
+  const response = await fetch(`${BASE_URL}/item-category/${categoryId}/`);
   const data = await response.json();
-  return data.items.map((b) => ({
-    name: b.name,
-    url: b.url,
-    type: 'pokeball',
-    api: 'pokeapi',
-  }));
+  
+  return data.items.map((b) => {
+    const id = b.url.split('/').filter(Boolean).pop();
+    
+    return {
+      id,
+      name: b.name,
+      url: b.url,
+      type: 'pokeball',
+      api: 'pokeapi',
+      image_path: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${b.name}.png`,
+    };
+  });
 }
 
-async function getAllPokeBallsNamesUrls() {
+async function getAllPokeBalls() {
   const [standardBalls, specialBalls, apricornBalls] = await Promise.all([
     getBallsByCategory(34), // Standard Balls
     getBallsByCategory(33), // Special Balls
@@ -50,68 +61,31 @@ async function getAllPokeBallsNamesUrls() {
 // ============================================================
 // FUNCIÓN GET - Obtener todos los JUEGOS
 // ============================================================
-async function getAllPokeGamesNamesUrls() {
-  const response = await fetch(
-    `${BASE_URL}/v2/version/?offset=0&limit=2000`,
-  );
+async function getAllPokeGames() {
+  const response = await fetch(`${BASE_URL}/version?offset=0&limit=2000`);
   const data = await response.json();
 
-  return data.results.map((g) => ({
-    name: g.name,
-    url: g.url,
-    type: 'game',
-    api: 'pokeapi',
-  }));
-}
-
-// ============================================================
-// FUNCIÓN GET - Obtener detalles filtrados de un listado de recursos
-// ============================================================
-async function getAllPokeApiDetails(list) {
-  const promises = list.map(async (obj) => {
-    const res = await fetch(obj.url);
-    const data = await res.json();
-
-    // Filtramos solo los campos necesarios según tipo
-    let filtered = { api: obj.api, type: obj.type, id: data.id, url: obj.url };
-
-    if (obj.type === 'pokemon') {
-      filtered = {
-        ...filtered,
-        name: data.name,
-        sprites: {
-          front_default: data.sprites?.front_default || null,
-        },
-      };
-    } else if (obj.type === 'pokeball') {
-      filtered = {
-        ...filtered,
-        name: data.name,
-        sprites: {
-          default: data.sprites?.default || null,
-        },
-      };
-    } else if (obj.type === 'game') {
-      filtered = {
-        ...filtered,
-        name: data.name,
-      };
-    }
-
-    return filtered;
+  const games = data.results.map((g) => {
+    const id = g.url.split('/').filter(Boolean).pop();
+    
+    return {
+      id,
+      name: g.name,
+      url: g.url,
+      type: 'game',
+      api: 'pokeapi',
+    };
   });
 
-  const data = await Promise.all(promises);
-  return data;
+  return games;
 }
 
 // ============================================================
 // FUNCIÓN GET - Detalle de POKÉMON
 // ============================================================
 async function getPokemonById(id) {
-  const res = await fetch(`${BASE_URL}/v2/pokemon/${id}`);
+  const res = await fetch(`${BASE_URL}/pokemon/${id}`);
   if (!res.ok) throw new Error('Pokemon not found');
-
   const data = await res.json();
 
   return {
@@ -119,10 +93,10 @@ async function getPokemonById(id) {
     name: data.name,
     type: 'pokemon',
     api: 'pokeapi',
+    image_path: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`,
     sprites: {
       front_default: data.sprites?.front_default || null,
-      other:
-        data.sprites?.other?.['official-artwork']?.front_default || null,
+      other: data.sprites?.other?.['official-artwork']?.front_default || null,
     },
     height: data.height,
     weight: data.weight,
@@ -139,9 +113,8 @@ async function getPokemonById(id) {
 // FUNCIÓN GET - Detalle de POKÉBALL
 // ============================================================
 async function getPokeBallById(id) {
-  const res = await fetch(`${BASE_URL}/v2/item/${id}`);
+  const res = await fetch(`${BASE_URL}/item/${id}`);
   if (!res.ok) throw new Error('Pokeball not found');
-
   const data = await res.json();
 
   return {
@@ -149,14 +122,13 @@ async function getPokeBallById(id) {
     name: data.name,
     type: 'pokeball',
     api: 'pokeapi',
+    image_path: data.sprites?.default || null,
     sprites: {
       default: data.sprites?.default || null,
     },
     cost: data.cost,
     category: data.category?.name,
-    effect:
-      data.effect_entries?.find((e) => e.language.name === 'en')
-        ?.short_effect || null,
+    effect: data.effect_entries?.find((e) => e.language.name === 'en')?.short_effect || null,
   };
 }
 
@@ -164,9 +136,8 @@ async function getPokeBallById(id) {
 // FUNCIÓN GET - Detalle de JUEGO
 // ============================================================
 async function getGameById(id) {
-  const res = await fetch(`${BASE_URL}/v2/version/${id}`);
+  const res = await fetch(`${BASE_URL}/version/${id}`);
   if (!res.ok) throw new Error('Game not found');
-
   const data = await res.json();
 
   return {
@@ -174,7 +145,7 @@ async function getGameById(id) {
     name: data.name,
     type: 'game',
     api: 'pokeapi',
-    generation: data.generation?.name || null,
+    generation: data.version_group?.name || null,
   };
 }
 
@@ -182,10 +153,9 @@ async function getGameById(id) {
 // OBJETO EXPORTADO CON TODOS LOS SERVICIOS
 // ============================================================
 const pokeApiServices = {
-  getAllPokemonsNamesUrls,
-  getAllPokeBallsNamesUrls,
-  getAllPokeGamesNamesUrls,
-  getAllPokeApiDetails,
+  getAllPokemons,
+  getAllPokeBalls,
+  getAllPokeGames,
   getPokemonById,
   getPokeBallById,
   getGameById,

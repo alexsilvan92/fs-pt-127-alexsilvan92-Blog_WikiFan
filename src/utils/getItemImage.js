@@ -9,7 +9,7 @@ export const getItemImage = (item) => {
   }
 
   if (item.api === 'pokeapi')
-    imgSrc = item.sprites?.front_default || item.sprites?.default || img_not_found;
+    imgSrc = item.image_path || item.sprites?.front_default || item.sprites?.default || img_not_found;
 
   if (item.api === 'bobsburgersapi') imgSrc = item.image;
 

@@ -1,77 +1,44 @@
 import useGlobalReducer from '../../hooks/useGlobalReducer.jsx';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import pokeApiServices from '../../services/pokeApiServices.js';
 import { PokePedia } from '../../components/Pokepedia.jsx';
+import { Loading } from '../../components/Loading';
+import { NotFoundItem } from '../../components/NotFoundItem';
 
 export const PokeApiPage = () => {
   const { store, dispatch } = useGlobalReducer();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchPokeApi = async () => {
-      // 1️⃣ Pokémon (lista ligera)
-      const pokemonsList = await pokeApiServices.getAllPokemonsNamesUrls();
+      try {
+        setLoading(true);
+        setError(null);
 
-      const pokemons = await pokeApiServices.getAllPokeApiDetails(
-        pokemonsList.map((p) => ({
-          ...p,
-          type: 'pokemon',
-          api: 'pokeapi',
-        })),
-      );
+        const [pokemons, pokeBalls, games] = await Promise.all([
+          pokeApiServices.getAllPokemons(),
+          pokeApiServices.getAllPokeBalls(),
+          pokeApiServices.getAllPokeGames(),
+        ]);
 
-      // 2️⃣ Pokéballs
-      const pokeBallsList =
-        await pokeApiServices.getAllPokeBallsNamesUrls();
-
-      const pokeBalls = await pokeApiServices.getAllPokeApiDetails(
-        pokeBallsList.map((b) => ({
-          ...b,
-          type: 'pokeball',
-          api: 'pokeapi',
-        })),
-      );
-
-      // 3️⃣ Juegos
-      const gamesList = await pokeApiServices.getAllPokeGamesNamesUrls();
-
-      const games = await pokeApiServices.getAllPokeApiDetails(
-        gamesList.map((g) => ({
-          ...g,
-          type: 'game',
-          api: 'pokeapi',
-        })),
-      );
-
-      dispatch({ type: 'set_allPokemons', payload: pokemons });
-      dispatch({ type: 'set_allPokeBalls', payload: pokeBalls });
-      dispatch({ type: 'set_allPokeGames', payload: games });
+        dispatch({ type: 'set_allPokemons', payload: pokemons });
+        dispatch({ type: 'set_allPokeBalls', payload: pokeBalls });
+        dispatch({ type: 'set_allPokeGames', payload: games });
+      } catch (err) {
+        console.error('❌ Error cargando datos de Poke Api:', err);
+        setError(err.message || 'Error al cargar los datos');
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchPokeApi();
   }, []);
 
-  // ======================================
-  // useEffect PARA DEBUGGER DE LA STORE
-  // ======================================
-  useEffect(() => {
-    console.log('💾🌍 Store actualizado:', store);
-  }, [store]);
-
-  // ======================================
-  // useEffect PARA DEBUGGER DE LOCALSTORAGE
-  // ======================================
-  useEffect(() => {
-    const raw = localStorage.getItem('wikiStore');
-    let parsed = null;
-    try {
-      parsed = JSON.parse(raw);
-    } catch {
-      parsed = raw;
-    }
-
-    console.log('💾🧠 localStorage wikiStore:', parsed);
-  }, [store.favorites]);
+  if (loading) return <Loading message="Cargando datos de la Poke Api" />;
+  if (error) return <NotFoundItem />;
 
   return <PokePedia />;
 };
