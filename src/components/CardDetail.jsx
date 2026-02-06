@@ -9,8 +9,6 @@ import img_not_found from '../assets/img/img_not_found.png'
 export const CardDetail = ({ item }) => {
   if (!item) return <NotFoundItem />;
 
-  console.log('🚀 CardDetail Cargado');
-
   const navigate = useNavigate();
 
   const { store, dispatch } = useGlobalReducer();
@@ -28,6 +26,8 @@ export const CardDetail = ({ item }) => {
   const handleBack = () => navigate(-1);
 
   const imgSrc = getItemImage(item);
+
+  console.log('🚀 CardDetail Cargado', item);
 
   return (
     <div className="container mt-5">
@@ -62,7 +62,7 @@ export const CardDetail = ({ item }) => {
           </div>
 
           <div className="col-md-8 p-4">
-            <div className="card-body">
+            <div className="card-body row">
               <ul className="list-group list-group-flush mt-3">
                 {Object.entries(item).map(([key, value]) => {
                   if (
@@ -88,6 +88,11 @@ export const CardDetail = ({ item }) => {
                       'episodeUrl',
                       'created',
                       'edited',
+                      'pilots',
+                      'films',
+                      'homeworld',
+                      'vehicles',
+                      'starships',
                     ].includes(key)
                   )
                     return null;
@@ -106,13 +111,13 @@ export const CardDetail = ({ item }) => {
                     </li>
                   );
                 })}
+              </ul>
                 <button
                   className="btn btn-outline-secondary"
                   onClick={handleBack}
                 >
                   ⬅️ VOLVER
                 </button>
-              </ul>
             </div>
           </div>
         </div>

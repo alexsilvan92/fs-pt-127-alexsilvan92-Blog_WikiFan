@@ -41,7 +41,7 @@ export const StarWarsCardDetailPage = () => {
     fetchDetail();
   }, [type, id]);
 
-  if (loading) return <div className="text-center mt-5">Cargando...</div>;
+  if (loading) return <Loading message="Cargando..." />;
   if (error || !item) return <NotFoundItem />;
 
   return <CardDetail item={item} />;
